@@ -1,0 +1,374 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+html,body{
+    margin: 0;
+    padding: 0;
+    background: black;
+    font-family: 'Roboto', sans-serif;
+}
+.video_wrapper[data-disappear]:not([data-first]) {
+    cursor: none;
+}
+.main_video {
+    position: absolute;
+    max-width: 100%;
+    max-height: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    height: 100%;
+    width: 100%;
+}
+.controls_wrapper {
+    box-sizing: border-box;
+    position: absolute;
+    width: 100%;
+    bottom: 00px;
+    height: 85px;
+    padding: 15px;
+    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6));
+    display: flex;
+    align-items: center;
+    transition: opacity 300ms;
+}
+.video_wrapper[data-disappear] .controls_wrapper,.video_wrapper[data-disappear] .exit, .video_wrapper[data-disappear] .back_arrow {
+    opacity: 0;
+}
+.controls_container {
+    width: 94%;
+    margin: 0 auto;
+    display: flex;
+}
+
+.timeline_container {
+    position: absolute;
+    bottom: 90px;
+    height: 5px;
+    width: 90%;
+    border-radius: 0.15rem;
+    background: rgba(69, 69, 69, 0.8);
+    left: 50%;
+    transform: translate(-50%);
+    transition: height 200ms;
+}
+.timeline_container:hover{
+    height: 10px;
+}
+.timeline_progress {
+    position: relative;
+    background: red;
+    border-radius: 0.15rem;
+    height: 100%;
+    width: 0;
+    left: 0;
+    top:-5px;
+    z-index: 1;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    transition: height 200ms;
+}
+.timeline_container:hover .timeline_progress {
+    top: -10px;
+}
+.timeline_loaded {
+    position: relative;
+    background: rgba(69, 69, 69, 1);
+    height: 100%;
+    width: 0;
+    left:0;
+    top:0;
+}
+.timeline_scrubhead,.volume_slidehead {
+    position: absolute;
+    background: red;
+    height: 15px;
+    width: 15px;
+    top: 50%;
+    transform: translate(0,-50%);
+    border-radius: 100%;
+    right: -7.5px;
+    z-index: 2;
+}
+.back_arrow {
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    transition: opacity 300ms !important
+}
+.exit {
+    position: absolute;
+    top: 10%;
+    font-weight: 900;
+    font-size: 45px !important;
+    right: 5%;
+    transition: opacity 300ms !important;
+}
+.button_wrapper {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    height: 39px;
+    display: flex;
+}
+.fullscreen_toggle {
+    right: 0;
+}
+.volume_button {
+    right: 17%;
+    width: 40px;
+}
+.video_wrapper button {
+    background: transparent;
+    color: white;
+    font-size: 30px;
+    border: none;
+    transform: scale(1);
+    transition: transform 200ms;
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: pointer;
+}
+.video_wrapper button:not(.no_click):hover  {
+    color: #a7a7a7;
+    transform: scale(1.2);
+}
+.volume_slider_container {
+    width: 100px;
+    height: 5px;
+    background: rgba(69, 69, 69, 0.8);
+    position: relative;
+    top: 50%;
+    transform: translate(0,-50%);
+    margin-right: 30px;
+}
+.volume_progress {
+    background: red;
+    position: relative;
+    width: 100%;
+    top: 50%;
+    transform: translate(0, -50%);
+    height: 100%;
+}
+.toolbar_time {
+    position: absolute;
+    height: auto;
+    color: white;
+    font-size: 20px;
+    background: rgba(0,0,0,0.6);
+    top: -40px;
+    padding: 5px;
+    border-radius: 10px;
+    vertical-align: middle;
+    font-family: 'Roboto',sans-serif;
+    opacity: 0;
+    transition: opacity 300ms;
+}
+.timeline_container:hover .toolbar_time {
+    opacity: 1;
+}
+.spacer {
+    width: 100%;
+    text-align: center;
+    position: relative;
+    top: 7px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.time_left,.time_elapsed,.spacer {
+    color: white;
+    font-size: 20px;
+    top: 7px;
+}
+.time_left,.time_elapsed {
+    position: relative;
+    cursor: default;
+    user-select: none;
+    -webkit-user-select: none;
+}
+.info_button {
+    margin-right: 10px;
+    margin-left: 20px;
+}
+.info_button button:hover ~ .movie_info {
+    display: inline-block;
+    opacity: 1;
+    visibility: visible;
+}
+.movie_info {
+    transition: visibility 500ms, opacity 500ms;
+    opacity: 0;
+    visibility: hidden;
+    position: fixed;
+    background: rgba(0,0,0,0.8);
+    border-radius: 0.25rem;
+    bottom: 20%;
+    height: 200px;
+    min-width: 500px;
+    right: 5%;
+    padding: 10px;
+    color: white;
+    max-width: 600px;
+}
+.movie_info img{
+    float: left;
+    width: 80px;
+    height: auto;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.movie_info .title {
+    margin: 0;
+    font-size: 25px;
+    white-space: nowrap;
+    margin-right: 50px;
+    line-height: 10px;
+    margin-top: 5px;
+}
+.movie_info .year {
+    line-height: 10px;
+    display: inline-block;
+}
+.movie_info .rating {
+    border: solid 2px #676767;
+    display: inline-block;
+    padding: 5px;
+    margin: 0;
+    font-size: 13px;
+}
+.movie_info .description {
+    text-align: justify;
+}
+.play_pause_toggle {
+    margin-right: 20px;
+}
+/* loader */
+.loader {
+    position: fixed;
+    width: 80px;
+    height: 80px;
+    left:50vw;
+    top: 50vh;
+    transform:translate(-50%,-50%);
+}
+
+.sk-circle {
+    width: 90%;
+    height: 90%;
+}
+.sk-circle .sk-child {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.sk-circle .sk-child:before {
+    content: '';
+    display: block;
+    margin: 0 auto;
+    width: 15%;
+    height: 15%;
+    background-color: #ffffff;
+    border-radius: 100%;
+    -webkit-animation: sk-circleBounceDelay 1.2s infinite ease-in-out both;
+    animation: sk-circleBounceDelay 1.2s infinite ease-in-out both;
+}
+.sk-circle .sk-circle2 {
+    -webkit-transform: rotate(30deg);
+    -ms-transform: rotate(30deg);
+    transform: rotate(30deg); }
+.sk-circle .sk-circle3 {
+    -webkit-transform: rotate(60deg);
+    -ms-transform: rotate(60deg);
+    transform: rotate(60deg); }
+.sk-circle .sk-circle4 {
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg); }
+.sk-circle .sk-circle5 {
+    -webkit-transform: rotate(120deg);
+    -ms-transform: rotate(120deg);
+    transform: rotate(120deg); }
+.sk-circle .sk-circle6 {
+    -webkit-transform: rotate(150deg);
+    -ms-transform: rotate(150deg);
+    transform: rotate(150deg); }
+.sk-circle .sk-circle7 {
+    -webkit-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg); }
+.sk-circle .sk-circle8 {
+    -webkit-transform: rotate(210deg);
+    -ms-transform: rotate(210deg);
+    transform: rotate(210deg); }
+.sk-circle .sk-circle9 {
+    -webkit-transform: rotate(240deg);
+    -ms-transform: rotate(240deg);
+    transform: rotate(240deg); }
+.sk-circle .sk-circle10 {
+    -webkit-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg); }
+.sk-circle .sk-circle11 {
+    -webkit-transform: rotate(300deg);
+    -ms-transform: rotate(300deg);
+    transform: rotate(300deg); }
+.sk-circle .sk-circle12 {
+    -webkit-transform: rotate(330deg);
+    -ms-transform: rotate(330deg);
+    transform: rotate(330deg); }
+.sk-circle .sk-circle2:before {
+    -webkit-animation-delay: -1.1s;
+    animation-delay: -1.1s; }
+.sk-circle .sk-circle3:before {
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s; }
+.sk-circle .sk-circle4:before {
+    -webkit-animation-delay: -0.9s;
+    animation-delay: -0.9s; }
+.sk-circle .sk-circle5:before {
+    -webkit-animation-delay: -0.8s;
+    animation-delay: -0.8s; }
+.sk-circle .sk-circle6:before {
+    -webkit-animation-delay: -0.7s;
+    animation-delay: -0.7s; }
+.sk-circle .sk-circle7:before {
+    -webkit-animation-delay: -0.6s;
+    animation-delay: -0.6s; }
+.sk-circle .sk-circle8:before {
+    -webkit-animation-delay: -0.5s;
+    animation-delay: -0.5s; }
+.sk-circle .sk-circle9:before {
+    -webkit-animation-delay: -0.4s;
+    animation-delay: -0.4s; }
+.sk-circle .sk-circle10:before {
+    -webkit-animation-delay: -0.3s;
+    animation-delay: -0.3s; }
+.sk-circle .sk-circle11:before {
+    -webkit-animation-delay: -0.2s;
+    animation-delay: -0.2s; }
+.sk-circle .sk-circle12:before {
+    -webkit-animation-delay: -0.1s;
+    animation-delay: -0.1s; }
+
+@-webkit-keyframes sk-circleBounceDelay {
+    0%, 80%, 100% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    } 40% {
+          -webkit-transform: scale(1);
+          transform: scale(1);
+      }
+}
+
+@keyframes sk-circleBounceDelay {
+    0%, 80%, 100% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    } 40% {
+          -webkit-transform: scale(1);
+          transform: scale(1);
+      }
+}
